@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ไทยช่วยไทย 60/40</title>
+</head>
+<body>
+<h1>คำนวณ 60/40</h1>
+
+<input id="amount" type="number" placeholder="กรอกยอดเงิน">
+<button onclick="calc()">คำนวณ</button>
+
+<p id="result"></p>
+
+<script>
+function calc(){
+  let a = document.getElementById("amount").value;
+  let gov = a * 0.6;
+  let user = a * 0.4;
+
+  document.getElementById("result").innerHTML =
+  "รัฐช่วย: " + gov + " บาท | จ่ายเอง: " + user + " บาท";
+}
+</script>
+
+</body>
+</html>
