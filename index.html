@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>คำนวณ 60/40 + เพดาน 200</title>
+<title>คำนวณยอดร้านค้า</title>
 
 <style>
 body{
@@ -10,12 +10,13 @@ body{
     max-width:500px;
     margin:auto;
     padding:20px;
+    background:#f5f5f5;
 }
 
 .card{
     background:#fff;
     padding:20px;
-    border-radius:12px;
+    border-radius:14px;
     box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
@@ -30,13 +31,13 @@ button{
     background:#2196F3;
     color:white;
     border:none;
-    cursor:pointer;
+    border-radius:8px;
 }
 
 .result{
     margin-top:15px;
-    background:#f1f8e9;
     padding:15px;
+    background:#e8f5e9;
     border-radius:10px;
 }
 </style>
@@ -46,7 +47,7 @@ button{
 
 <div class="card">
 
-<h2>🛒 คำนวณ 60/40 (มีเพดาน 200 บาท)</h2>
+<h2>🛒 คำนวณยอดร้านค้า</h2>
 
 <input type="number" id="price" placeholder="กรอกราคาสินค้า">
 
@@ -66,29 +67,31 @@ function calc(){
         return;
     }
 
-    // คำนวณ 60/40
-    let gov = price * 0.60;
-    let user = price * 0.40;
+    let shopSupport = price * 0.60;  // ส่วนลดระบบร้าน
+    let customerPay = price * 0.40;  // ลูกค้าจ่าย
 
-    // เพดานรัฐ 200 บาท
-    let govUsed = gov;
+    let supportUsed = shopSupport;
     let cashExtra = 0;
 
-    if(gov > 200){
-        govUsed = 200;
-        cashExtra = gov - 200;
+    // เพดาน 200 บาท
+    if(shopSupport > 200){
+        supportUsed = 200;
+        cashExtra = shopSupport - 200;
     }
 
-    // เงินที่ต้องจ่ายจริง (สแกน)
-    let scanPay = user + cashExtra;
+    let scanPay = customerPay;
+    let cashPay = cashExtra;
 
     document.getElementById("result").innerHTML = `
-        <h3>📊 ผลลัพธ์</h3>
-        <p>ราคาสินค้า: ${price.toFixed(2)} บาท</p>
-        <p>รัฐช่วย: ${govUsed.toFixed(2)} บาท</p>
-        <p>ต้องจ่ายปกติ (40%): ${user.toFixed(2)} บาท</p>
-        <p><b>💳 ต้องสแกนจ่ายจริง: ${scanPay.toFixed(2)} บาท</b></p>
-        <p style="color:red;">(ถ้าเกินเพดาน 200 บาท จะต้องจ่ายเพิ่มเป็นเงินสดในระบบ)</p>
+        <h3>📊 สรุปยอด</h3>
+
+        <p>💰 ราคาสินค้า: ${price.toFixed(2)} บาท</p>
+
+        <p>🏪 ร้านช่วยออก: ${supportUsed.toFixed(2)} บาท</p>
+
+        <p>📱 ลูกค้าต้องสแกนจ่าย: <b>${scanPay.toFixed(2)} บาท</b></p>
+
+        <p>💵 เงินสดเพิ่ม (ถ้าเกินเพดาน): <b>${cashPay.toFixed(2)} บาท</b></p>
     `;
 }
 </script>
